@@ -1,3 +1,4 @@
+
 # National Budget Lab: Kenyan National Budget Simulation (MVP)
 
 > An interactive strategic simulation game about allocating scarce national resources to resolve complex economic, humanitarian, and infrastructure challenges.
@@ -70,3 +71,9 @@ Or using the included PowerShell helper:
 ```
 
 Access the application in your browser at `http://localhost:5173/`.
+=======
+# shilling-game
+
+i promise to commit to this repository commits.
+
+how would it feel 60 days later
