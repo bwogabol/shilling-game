@@ -40,37 +40,11 @@ You assume the role of **Cabinet Secretary for the National Treasury of the Repu
 
 ## Architecture
 
-The project maintains a strict separation of concerns:
-- **UI Layer (`src/components/`)**:
-  - `LandingScreen`: Atmosphere, briefing mandate, and sector showcase.
-  - `GameSetupModal`: Administration title and strategic policy doctrine selection.
-  - `BudgetAllocator`: Real-time variance bar, 10 interactive sector cards, quick steps, locks, auto-balancing.
-  - `ResultsView`: 1y / 5y / 10y tabbed timeline, legacy evaluation grade, indicator dashboard, SVG trajectory charts, press gazette dispatches, sector reports.
-- **Simulation Engine (`src/engine/simulationEngine.ts`)**: Pure TypeScript logic, 100% decoupled from the UI, deterministic, and unit-tested.
-- **Data Layer (`src/data/`)**: Sector profiles, baselines, strategic doctrines, and news headlines.
-- **Persistence Layer (`src/services/storageService.ts`)**: Swappable storage adapter currently backing state via browser `localStorage`, with async methods ready for database / REST API expansion.
-
 ---
 
 ## Quick Start (Zero Cost & Portable)
 
-```bash
-# Start development server
-npm run dev
 
-# Run simulation test suite
-npm run test:sim
-
-# Build production bundle
-npm run build
-```
-
-Or using the included PowerShell helper:
-```powershell
-.\start-dev.ps1
-```
-
-Access the application in your browser at `http://localhost:5173/`.
 =======
 # shilling-game
 
