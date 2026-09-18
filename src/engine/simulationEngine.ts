@@ -597,29 +597,29 @@ function generateHeadlines(
   if (metrics.gdpGrowth >= 7.0) {
     headlines.push({
       id: 'h-gdp-surge',
-      source: 'The Financial Standard',
+      source: 'Budget Lab Economic Monitor',
       tag: 'ECONOMY',
       type: 'positive',
-      title: `GDP Soars to ${metrics.gdpGrowth}%: Kenyan Economy Outpaces Sub-Saharan Peers`,
-      summary: `Surging productivity and aggressive investments catapult economic expansion to historic highs, driving investor excitement.`
+      title: `GDP Soars to ${metrics.gdpGrowth}%: Simulated Economy Outpaces Regional Peers`,
+      summary: `Surging productivity and strategic investments drive economic expansion to historic highs in this simulation run.`
     });
   } else if (metrics.gdpGrowth <= 3.5) {
     headlines.push({
       id: 'h-gdp-slump',
-      source: 'Business Daily Africa',
+      source: 'Budget Lab Economic Monitor',
       tag: 'ECONOMY',
       type: 'negative',
-      title: `Growth Cools to ${metrics.gdpGrowth}% as Sectoral Imbalances Drag Economy`,
-      summary: `Economic analysts warn that bottlenecks in key foundational sectors are damping private sector hiring and investment.`
+      title: `Growth Stalls at ${metrics.gdpGrowth}% as Sectoral Imbalances Drag the Economy`,
+      summary: `Bottlenecks in foundational sectors are damping private sector activity. Consider rebalancing your allocation.`
     });
   } else {
     headlines.push({
       id: 'h-gdp-steady',
-      source: 'The Daily Nation',
+      source: 'Budget Lab Economic Monitor',
       tag: 'ECONOMY',
       type: 'neutral',
-      title: `Kenya Clocks Steady ${metrics.gdpGrowth}% GDP Growth Amid Global Volatility`,
-      summary: `The National Treasury reports resilient macroeconomic fundamentals following the implementation of the ${doctrine.title}.`
+      title: `Economy Holds at ${metrics.gdpGrowth}% Growth — Stability Without Transformation`,
+      summary: `The simulation shows resilient but largely unchanged macroeconomic fundamentals under the ${doctrine.title} approach. This is the Status Quo outcome — rebalance to drive greater change.`
     });
   }
 
@@ -627,20 +627,20 @@ function generateHeadlines(
   if (metrics.foodSecurity >= 70) {
     headlines.push({
       id: 'h-food-secure',
-      source: 'East African Standard',
+      source: 'Budget Lab Food & Agriculture Desk',
       tag: 'DEVELOPMENT',
       type: 'positive',
-      title: 'Flour Prices Plummet as Strategic Grain Reserves Overflow',
-      summary: `Sustained agricultural support and irrigation schemes deliver record harvest yields across Western and Rift Valley counties.`
+      title: 'Food Reserves Overflow as Irrigation & Subsidy Schemes Deliver',
+      summary: `Sustained agricultural and water investment delivers record harvest yields across dryland and highland counties in this scenario.`
     });
   } else if (metrics.foodSecurity <= 40) {
     headlines.push({
       id: 'h-food-crisis',
-      source: 'Citizen News Bulletin',
+      source: 'Budget Lab Food & Agriculture Desk',
       tag: 'ALERT',
       type: 'negative',
-      title: 'Food Insecurity Alarms Sounded: Millions in Arid Counties Need Relief',
-      summary: `Slumping agricultural output combined with water access shortfalls has triggered sharp food inflation and urgent humanitarian appeals.`
+      title: 'Food Insecurity Critical: Arid Regions Require Emergency Relief',
+      summary: `Underfunded agriculture and water sectors have produced sharp food inflation and supply shortfalls in this simulation run.`
     });
   }
 
@@ -648,20 +648,20 @@ function generateHeadlines(
   if (metrics.debtToGdp >= 75) {
     headlines.push({
       id: 'h-debt-warning',
-      source: 'The Star Kenya',
+      source: 'Budget Lab Fiscal Monitor',
       tag: 'ALERT',
       type: 'negative',
-      title: `Debt Ratio Hits ${metrics.debtToGdp}%: Parliamentary Budget Office Urges Spending Restraint`,
-      summary: `Mounting sovereign debt repayment obligations threaten to crowd out discretionary developmental expenditure in future cycles.`
+      title: `Debt Ratio Reaches ${metrics.debtToGdp}%: Servicing Costs Crowd Out Development Spending`,
+      summary: `Mounting debt obligations are eating into future budget headroom. Rebalance toward revenue-generating sectors to improve sustainability.`
     });
   } else if (metrics.debtToGdp <= 62) {
     headlines.push({
       id: 'h-debt-relief',
-      source: 'Nairobi Law Monthly',
+      source: 'Budget Lab Fiscal Monitor',
       tag: 'STABILITY',
       type: 'positive',
-      title: `Kenya Achieves Credit Upgrade as Public Debt Contracts to ${metrics.debtToGdp}% of GDP`,
-      summary: `Prudent fiscal stewardship and strengthened revenue mobilization have won praise from international lenders and sovereign bondholders.`
+      title: `Debt-to-GDP Contracts to ${metrics.debtToGdp}%: Fiscal Position Strengthens`,
+      summary: `Disciplined allocation and improved revenue mobilization have significantly improved the simulated fiscal outlook.`
     });
   }
 
@@ -669,20 +669,20 @@ function generateHeadlines(
   if (metrics.publicApproval >= 65) {
     headlines.push({
       id: 'h-approval-high',
-      source: 'National Opinion Polls',
+      source: 'Budget Lab Public Sentiment Index',
       tag: 'CABINET',
       type: 'positive',
-      title: `Public Trust Surges to ${metrics.publicApproval}% in National Satisfaction Survey`,
-      summary: `Citizens applaud noticeable improvements in frontline public services, healthcare availability, and community security.`
+      title: `Public Trust Index Reaches ${metrics.publicApproval}% — Citizens Notice the Difference`,
+      summary: `Simulated citizens report improved frontline services, healthcare access, and community security in this allocation scenario.`
     });
   } else if (metrics.publicApproval <= 35) {
     headlines.push({
       id: 'h-approval-low',
-      source: 'The People Daily',
+      source: 'Budget Lab Public Sentiment Index',
       tag: 'ALERT',
       type: 'negative',
-      title: `Public Dissatisfaction Simmers: Civic Groups Decry Budget Inequities`,
-      summary: `Galloping cost of living and neglected social programs fuel vocal civic protests and legislative scrutiny in Parliament.`
+      title: `Public Dissatisfaction at ${metrics.publicApproval}% — Budget Inequities Draw Protests`,
+      summary: `Cost-of-living pressures and underfunded social programs have eroded civic confidence in this scenario.`
     });
   }
 
@@ -701,17 +701,17 @@ function generateLegacyVerdict(
   const unintendedConsequences: string[] = [];
 
   if (overallScore >= 80) {
-    title = 'The Visionary Architect of Sovereign Prosperity';
-    description = `Your administration successfully balanced the tough arithmetic of governance. Through strategic prioritization under the ${doctrine.title}, Kenya achieved durable GDP growth (${finalMetrics.gdpGrowth}%), controlled debt (${finalMetrics.debtToGdp}%), and elevated citizens' quality of life. History records this as a transformative decade.`;
+    title = 'The Visionary Architect of Transformative Change';
+    description = `Your deliberate reallocation paid off. Through the ${doctrine.title}, this simulation produced durable GDP growth (${finalMetrics.gdpGrowth}%), a controlled debt ratio (${finalMetrics.debtToGdp}%), and measurably improved citizen welfare. The compounding effects of your early decisions drove outcomes that differed substantially from the Status Quo.`;
   } else if (overallScore >= 65) {
-    title = 'The Resilient Pragmatist: Growth with Friction';
-    description = `You preserved national stability through turbulent economic cycles. Key areas advanced substantially, though the difficult tradeoffs of limited budget ceilings left certain critical sectors feeling the strain.`;
+    title = 'The Status Quo Pragmatist — Stability Preserved, Transformation Limited';
+    description = `The budget remained close to the baseline. The country avoided major shocks, but limited resources were redirected toward transformative outcomes. This is what the default allocation produces: stability without breakthrough. Try shifting more budget between synergistic sectors — Water + Agriculture, Infrastructure + Energy, or Health + Education — to see how the outcomes change.`;
   } else if (overallScore >= 50) {
-    title = 'The Compromise Administration: Patchwork Progress';
-    description = `While you avoided systemic collapse, the lack of sufficient funding in key complementary sectors produced mixed outcomes: progress in some areas was negated by friction in neglected lifelines.`;
+    title = 'Uneven Progress: Some Sectors Advanced, Others Strained';
+    description = `While you avoided systemic collapse, the lack of complementary sector funding created mixed results — progress in some areas was offset by friction in underfunded lifelines. Tradeoffs are real: every billion moved to one sector is a billion taken from another.`;
   } else {
-    title = 'The Austere Crisis: Systemic Strain and Discontent';
-    description = `Severe imbalances in your resource allocation triggered cascading crises across basic needs and civic trust. While certain priority projects were completed, the human and economic cost on the wider republic was severe.`;
+    title = 'Severe Imbalance: Cascading Strain Across Basic Services';
+    description = `Extreme reallocation triggered cascading crises. While some priority projects advanced, the human and economic cost on the wider simulation was severe. In a real system, these compounding failures take years or decades to recover from.`;
   }
 
   // Unintended consequences

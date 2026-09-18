@@ -17,9 +17,9 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
     <div className="min-h-[calc(100vh-65px)] bg-tactical-grid flex flex-col justify-between">
       {/* Hero Section */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 lg:py-16 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/80 border border-red-800 text-red-300 text-xs font-mono font-semibold tracking-wider mb-6 animate-pulse">
-          <span className="w-2 h-2 rounded-full bg-red-500"></span>
-          OFFICIAL STRATEGIC MANDATE • REPUBLICA YA KENYA
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800 text-emerald-300 text-xs font-mono font-semibold tracking-wider mb-6">
+          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          FICTIONAL SIMULATION • JAMHURI YA KENYA
         </div>
 
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white font-display uppercase">
@@ -30,6 +30,12 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
           You are appointed Cabinet Secretary for the National Treasury. You have a fictional national budget of{' '}
           <span className="text-amber-400 font-bold underline decoration-amber-500/50">KSh 3.0 Trillion</span>.
           Every shilling allocated creates winners, losers, and compounding systemic tradeoffs.
+        </p>
+
+        {/* Status Quo Teaching Hint */}
+        <p className="mt-3 text-sm text-gray-500 max-w-2xl mx-auto">
+          The default allocation is the <span className="text-amber-400 font-semibold">Status Quo</span> — it keeps the country stable, but produces little transformation.
+          Try shifting budget between sectors to discover synergies: <span className="text-emerald-400 font-mono">Water + Agriculture</span>, <span className="text-emerald-400 font-mono">Infrastructure + Energy</span>, <span className="text-emerald-400 font-mono">Health + Education</span>.
         </p>
 
         {/* Primary Action Buttons */}

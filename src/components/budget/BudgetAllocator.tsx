@@ -5,10 +5,11 @@ import {
   CheckCircle,
   AlertTriangle,
   Layers,
-  Wand2
+  Wand2,
+  Sparkles
 } from 'lucide-react';
 import { SectorCard } from './SectorCard';
-import { SECTORS, TOTAL_BUDGET_LIMIT } from '../../data/sectors';
+import { SECTORS, TOTAL_BUDGET_LIMIT, INITIAL_ALLOCATIONS } from '../../data/sectors';
 import { BudgetMap, SectorId, PolicyDoctrine } from '../../types/game';
 import { validateBudget } from '../../engine/simulationEngine';
 
@@ -52,8 +53,27 @@ export const BudgetAllocator: React.FC<BudgetAllocatorProps> = ({
     'State Resilience': 'bg-rose-500'
   };
 
+  const isBaseline = Object.keys(INITIAL_ALLOCATIONS).every(
+    (key) => Math.abs((allocations[key as keyof typeof INITIAL_ALLOCATIONS] ?? 0) - INITIAL_ALLOCATIONS[key as keyof typeof INITIAL_ALLOCATIONS]) < 1
+  );
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      {/* First-Run Teaching Banner: Status Quo vs Active Tradeoffs */}
+      {isBaseline && (
+        <div className="bg-[#0f1722] border border-amber-600/40 rounded-xl p-4 shadow-lg flex items-start gap-3">
+          <Sparkles className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <div className="text-xs space-y-1">
+            <div className="text-amber-300 font-bold uppercase tracking-wider font-mono">
+              Status Quo Allocation Loaded (KSh 3.0T)
+            </div>
+            <p className="text-gray-300 leading-relaxed">
+              Running this baseline produces stability without transformation. To see real impact, unlock sectors, move sliders, and observe how coupled sectors interact (e.g. <strong className="text-emerald-400">Water + Agriculture</strong>, <strong className="text-emerald-400">Infrastructure + Energy</strong>, or <strong className="text-emerald-400">Health + Education</strong>).
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Sticky Budget Status Command Bar */}
       <div className="tactical-panel rounded-xl p-4 sm:p-5 border border-gray-700 shadow-2xl sticky top-[69px] z-30 backdrop-blur-md">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -62,7 +82,7 @@ export const BudgetAllocator: React.FC<BudgetAllocatorProps> = ({
           <div className="flex flex-wrap items-baseline gap-6 sm:gap-8">
             <div>
               <span className="text-[11px] font-mono uppercase tracking-widest text-gray-400 block">
-                Statutory Budget Ceiling
+                Fictional Budget Target
               </span>
               <div className="text-xl sm:text-2xl font-black font-mono text-gray-200">
                 KSh {TOTAL_BUDGET_LIMIT.toLocaleString()} <span className="text-xs text-gray-400 font-semibold">Billion (3.0T)</span>
@@ -228,7 +248,7 @@ export const BudgetAllocator: React.FC<BudgetAllocatorProps> = ({
             <span>
               {remaining > 0
                 ? `You still have KSh ${remaining.toLocaleString()} Billion unallocated. Click 'Auto-Balance' or adjust unlocked sector sliders to enable simulation.`
-                : `Budget is exceeded by KSh ${Math.abs(remaining).toLocaleString()} Billion. Reduce spending in unlocked sectors to achieve statutory balance.`}
+                : `Budget is exceeded by KSh ${Math.abs(remaining).toLocaleString()} Billion. Reduce spending in unlocked sectors to achieve exact balance.`}
             </span>
           </div>
           <button

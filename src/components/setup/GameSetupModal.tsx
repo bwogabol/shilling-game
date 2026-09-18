@@ -34,10 +34,10 @@ export const GameSetupModal: React.FC<GameSetupModalProps> = ({
           </div>
           <div>
             <h2 className="text-xl sm:text-2xl font-bold font-display uppercase tracking-wide text-white">
-              Cabinet Induction & Strategic Doctrine
+              Simulation Setup
             </h2>
             <p className="text-xs font-mono text-gray-400">
-              State House Directive • 10-Year National Development Framework
+              National Budget Lab • Fictional 10-Year Kenya Fiscal Simulation
             </p>
           </div>
         </div>
@@ -136,7 +136,7 @@ export const GameSetupModal: React.FC<GameSetupModalProps> = ({
               type="submit"
               className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-bold shadow-lg shadow-emerald-950/60 border border-emerald-400/40 flex items-center gap-2 transition"
             >
-              <span>Accept Treasury Commission</span>
+              <span>Begin Simulation</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

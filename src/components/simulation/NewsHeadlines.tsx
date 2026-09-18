@@ -14,11 +14,11 @@ export const NewsHeadlines: React.FC<NewsHeadlinesProps> = ({ headlines, year })
         <div className="flex items-center gap-2">
           <Newspaper className="w-5 h-5 text-amber-400" />
           <h3 className="text-base font-bold text-white font-display uppercase tracking-wide">
-            National Press & Gazette Dispatches
+            Simulated News & Media Coverage
           </h3>
         </div>
         <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-gray-800 text-gray-300 border border-gray-700">
-          Year {year} Coverage
+          Year {year} Simulation
         </span>
       </div>
 
@@ -60,8 +60,8 @@ export const NewsHeadlines: React.FC<NewsHeadlinesProps> = ({ headlines, year })
               </div>
 
               <div className="mt-3 pt-2 border-t border-gray-800/60 flex justify-between items-center text-[10px] font-mono text-gray-400">
-                <span>Bureau Dispatch</span>
-                <span>Verified by National Monitoring</span>
+                <span>In-Game Dispatch</span>
+                <span>Fictional Scenario Event</span>
               </div>
             </div>
           );

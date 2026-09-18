@@ -8,6 +8,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { SimulationResult } from '../../types/game';
+import { INITIAL_ALLOCATIONS } from '../../data/sectors';
 import { TrajectoryChart } from './TrajectoryChart';
 import { IndicatorCard } from './IndicatorCard';
 import { NewsHeadlines } from './NewsHeadlines';
@@ -39,8 +40,40 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
     'F': 'text-rose-500 border-rose-600 bg-rose-950/60'
   };
 
+  const isBaseline = Object.keys(INITIAL_ALLOCATIONS).every(
+    (key) => Math.abs((result.allocations[key as keyof typeof INITIAL_ALLOCATIONS] ?? 0) - INITIAL_ALLOCATIONS[key as keyof typeof INITIAL_ALLOCATIONS]) < 1
+  );
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+      {/* Status Quo Educational Callout for First Run / Baseline */}
+      {isBaseline && (
+        <div className="bg-gradient-to-r from-amber-950/70 via-[#131b26] to-amber-950/40 border border-amber-600/50 rounded-xl p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-xs font-mono font-bold uppercase tracking-wide border border-amber-500/30">
+              <Sparkles className="w-3.5 h-3.5" />
+              STATUS QUO RUN DETECTED
+            </div>
+            <h3 className="text-lg font-bold text-white font-display">
+              Baseline Allocation Preserves Stability, But Limits Transformation
+            </h3>
+            <p className="text-sm text-gray-300 leading-relaxed max-w-3xl">
+              The budget remained at default baseline levels. The country avoided severe bottlenecks and debt shocks, but without concentrated capital, transformative growth remains out of reach. Budget decisions require real tradeoffs.
+            </p>
+            <p className="text-xs text-emerald-400/90 font-mono pt-1">
+              💡 Suggested Next Experiment: Try shifting funds into complementary pairs such as <strong className="text-white">Water + Agriculture</strong>, <strong className="text-white">Infrastructure + Energy</strong>, or <strong className="text-white">Health + Education</strong>.
+            </p>
+          </div>
+          <button
+            onClick={onRevise}
+            className="shrink-0 px-5 py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm rounded-lg shadow-lg flex items-center gap-2 transition"
+          >
+            <RotateCcw className="w-4 h-4" />
+            <span>Make Strategic Changes</span>
+          </button>
+        </div>
+      )}
+
       {/* Top Banner: Legacy Verdict & Cabinet Rating */}
       <div className="tactical-panel rounded-xl p-6 sm:p-8 border border-gray-700 shadow-2xl relative overflow-hidden text-left">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-500" />
@@ -49,7 +82,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
           <div className="space-y-2 max-w-3xl">
             <div className="flex items-center gap-2">
               <span className="text-xs font-mono uppercase tracking-widest text-amber-400 bg-amber-950/80 px-2.5 py-0.5 rounded border border-amber-800">
-                10-Year Cabinet Evaluation
+                10-Year Simulation Evaluation
               </span>
               <span className="text-xs font-mono text-gray-400">
                 Doctrine: <strong className="text-gray-200">{doctrine.title.split('(')[0]}</strong>
@@ -69,7 +102,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
           <div className="flex items-center gap-4 bg-[#0d141e] p-4 rounded-xl border border-gray-700 shrink-0 w-full lg:w-auto justify-between lg:justify-start">
             <div className="text-center">
               <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">
-                Treasury Grade
+                Simulation Grade
               </span>
               <div className={`w-16 h-16 rounded-xl border-2 flex items-center justify-center font-black text-3xl font-display shadow-lg mx-auto mt-1 ${GRADE_COLORS[score.grade] || GRADE_COLORS['C']}`}>
                 {score.grade}
@@ -164,21 +197,48 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
         </div>
       </div>
 
-      {/* Systemic Alerts / Synergy Banners for the active horizon */}
+      {/* Cause -> Effect: Systemic Synergy & Bottleneck Alerts for the active horizon */}
       {(systemicTradeoffs.length > 0 || strategicAlerts.length > 0) && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {systemicTradeoffs.map((item, idx) => (
-            <div key={idx} className="bg-emerald-950/30 border border-emerald-800/60 p-3.5 rounded-lg text-xs text-emerald-200 flex items-start gap-2">
-              <Sparkles className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span>{item}</span>
-            </div>
-          ))}
-          {strategicAlerts.map((item, idx) => (
-            <div key={idx} className="bg-rose-950/30 border border-rose-800/60 p-3.5 rounded-lg text-xs text-rose-200 flex items-start gap-2">
-              <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-              <span>{item}</span>
-            </div>
-          ))}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-gray-400">
+              Direct Cause & Effect • Structural Feedback
+            </span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {systemicTradeoffs.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-[#0b1b15] border-l-4 border-l-emerald-500 border-y border-r border-emerald-900/60 p-4 rounded-r-xl text-xs text-emerald-100 flex items-start gap-3 shadow-lg hover:bg-[#0e241c] transition"
+              >
+                <div className="w-6 h-6 rounded bg-emerald-950/80 border border-emerald-700/80 flex items-center justify-center shrink-0 text-emerald-400 mt-0.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wide text-emerald-400 block">
+                    Synergy Unlocked
+                  </span>
+                  <span className="leading-relaxed text-emerald-200">{item}</span>
+                </div>
+              </div>
+            ))}
+            {strategicAlerts.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-[#201015] border-l-4 border-l-rose-500 border-y border-r border-rose-900/60 p-4 rounded-r-xl text-xs text-rose-100 flex items-start gap-3 shadow-lg hover:bg-[#28141b] transition"
+              >
+                <div className="w-6 h-6 rounded bg-rose-950/80 border border-rose-700/80 flex items-center justify-center shrink-0 text-rose-400 mt-0.5">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wide text-rose-400 block">
+                    Bottleneck / Fiscal Strain
+                  </span>
+                  <span className="leading-relaxed text-rose-200">{item}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
@@ -196,6 +256,8 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             value={metrics.gdpGrowth}
             unit="%"
             baseline={5.2}
+            min={0}
+            max={10}
             description="Target > 6.0% for rapid poverty reduction"
           />
           <IndicatorCard
@@ -203,6 +265,8 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             value={metrics.debtToGdp}
             unit="%"
             baseline={68.0}
+            min={40}
+            max={90}
             description="IMF threshold caution > 70%"
             isInverse
           />
@@ -211,6 +275,8 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             value={metrics.foodSecurity}
             unit="/100"
             baseline={52.0}
+            min={0}
+            max={100}
             description="Reflects staple reserves & harvest yields"
           />
           <IndicatorCard
@@ -218,6 +284,8 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             value={metrics.hdi}
             unit="/100"
             baseline={58.0}
+            min={0}
+            max={100}
             description="Health, longevity, and literacy composite"
           />
           <IndicatorCard
@@ -225,6 +293,8 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             value={metrics.publicApproval}
             unit="%"
             baseline={50.0}
+            min={0}
+            max={100}
             description="Civic trust and satisfaction index"
           />
           <IndicatorCard
@@ -232,6 +302,8 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             value={metrics.infrastructureIndex}
             unit="/100"
             baseline={55.0}
+            min={0}
+            max={100}
             description="Logistics corridors & power grid stability"
           />
         </div>

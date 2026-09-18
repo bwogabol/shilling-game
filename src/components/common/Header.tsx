@@ -36,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
             </div>
             <p className="text-xs text-gray-400 font-mono">
-              The Treasury Mandate • Fictional Resource Allocation Simulator
+              A fictional Kenya fiscal simulation
             </p>
           </div>
         </div>

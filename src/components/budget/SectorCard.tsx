@@ -66,30 +66,34 @@ export const SectorCard: React.FC<SectorCardProps> = ({
   // Severity color indicator
   const ratio = allocated / sector.baseline;
   let statusBadge = {
-    label: 'BASELINE',
-    classes: 'bg-gray-800 text-gray-300 border-gray-700'
+    label: 'BALANCED',
+    classes: 'bg-gray-800 text-gray-300 border-gray-700',
+    barColor: 'bg-gray-500'
   };
   if (ratio <= 0.6) {
-    statusBadge = { label: 'ACUTE CRISIS', classes: 'bg-red-950 text-red-300 border-red-700 animate-pulse' };
+    statusBadge = { label: 'CRITICAL DEFICIT', classes: 'bg-rose-950 text-rose-300 border-rose-700 animate-pulse', barColor: 'bg-rose-500' };
   } else if (ratio < 0.9) {
-    statusBadge = { label: 'DEFICIT CUT', classes: 'bg-amber-950 text-amber-300 border-amber-800' };
+    statusBadge = { label: 'UNDERFUNDED', classes: 'bg-amber-950 text-amber-300 border-amber-800', barColor: 'bg-amber-500' };
   } else if (ratio >= 1.35) {
-    statusBadge = { label: 'TRANSFORMATIVE', classes: 'bg-emerald-950 text-emerald-300 border-emerald-700' };
+    statusBadge = { label: 'EXCEPTIONAL SURGE', classes: 'bg-emerald-950 text-emerald-300 border-emerald-700', barColor: 'bg-emerald-400' };
   } else if (ratio > 1.05) {
-    statusBadge = { label: 'EXPANDED', classes: 'bg-teal-950 text-teal-300 border-teal-800' };
+    statusBadge = { label: 'EXPANDED', classes: 'bg-teal-950 text-teal-300 border-teal-800', barColor: 'bg-teal-400' };
   }
+
+  // Visual fill of allocation between min and max
+  const capacityPercent = Math.round(((allocated - sector.min) / (sector.max - sector.min)) * 100);
+  const baselinePercent = Math.round(((sector.baseline - sector.min) / (sector.max - sector.min)) * 100);
 
   return (
     <div
-      className={`tactical-panel rounded-xl p-4 sm:p-5 border transition-all duration-200 ${
-        isLocked
+      className={`tactical-panel rounded-xl p-4 sm:p-5 border transition-all duration-200 ${isLocked
           ? 'border-amber-900/60 bg-[#0d121a]'
           : ratio <= 0.6
-          ? 'border-red-900/60'
-          : ratio >= 1.2
-          ? 'border-emerald-900/60'
-          : 'border-gray-800 hover:border-gray-700'
-      }`}
+            ? 'border-rose-900/70 bg-[#160c10]'
+            : ratio >= 1.2
+              ? 'border-emerald-900/70 bg-[#0d1713]'
+              : 'border-gray-800 hover:border-gray-700'
+        }`}
     >
       {/* Card Header */}
       <div className="flex items-start justify-between gap-3">
@@ -100,7 +104,7 @@ export const SectorCard: React.FC<SectorCardProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-white text-base font-display">{sector.name}</h3>
-              <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase font-bold ${statusBadge.classes}`}>
+              <span className={`text-[9px] font-mono px-2 py-0.5 rounded border uppercase font-bold ${statusBadge.classes}`}>
                 {statusBadge.label}
               </span>
             </div>
@@ -113,11 +117,10 @@ export const SectorCard: React.FC<SectorCardProps> = ({
         {/* Lock button */}
         <button
           onClick={onToggleLock}
-          className={`p-1.5 rounded border text-xs flex items-center gap-1 transition ${
-            isLocked
+          className={`p-1.5 rounded border text-xs flex items-center gap-1 transition ${isLocked
               ? 'bg-amber-950/80 text-amber-300 border-amber-700'
               : 'bg-gray-800/60 text-gray-400 border-gray-700 hover:text-white'
-          }`}
+            }`}
           title={isLocked ? 'Unlock allocation' : 'Lock allocation during auto-balancing'}
         >
           {isLocked ? <Lock className="w-3.5 h-3.5" /> : <Unlock className="w-3.5 h-3.5" />}
@@ -134,19 +137,35 @@ export const SectorCard: React.FC<SectorCardProps> = ({
           <span className="text-sm font-mono text-gray-400 font-semibold">Billion</span>
         </div>
 
-        <div className={`font-mono text-xs font-bold px-2 py-1 rounded ${
-          delta > 0
+        <div className={`font-mono text-xs font-bold px-2 py-1 rounded ${delta > 0
             ? 'text-emerald-400 bg-emerald-950/50 border border-emerald-900/50'
             : delta < 0
-            ? 'text-rose-400 bg-rose-950/50 border border-rose-900/50'
-            : 'text-gray-400 bg-gray-800/40'
-        }`}>
+              ? 'text-rose-400 bg-rose-950/50 border border-rose-900/50'
+              : 'text-gray-400 bg-gray-800/40'
+          }`}>
           {delta > 0 ? `+${delta}B (+${deltaPercent}%)` : delta < 0 ? `${delta}B (${deltaPercent}%)` : '0B (0%)'}
         </div>
       </div>
 
+      {/* Visual Reservoir / Capacity Level Meter */}
+      <div className="mt-3 relative">
+        <div className="h-2 w-full bg-[#10151d] rounded-full overflow-hidden border border-gray-800/80 relative">
+          {/* Baseline marker pin */}
+          <div
+            style={{ left: `${baselinePercent}%` }}
+            className="absolute top-0 bottom-0 w-0.5 bg-gray-400 z-10"
+            title={`Baseline: KSh ${sector.baseline}B`}
+          />
+          {/* Active Fill Bar */}
+          <div
+            style={{ width: `${capacityPercent}%` }}
+            className={`h-full ${statusBadge.barColor} transition-all duration-300 rounded-full`}
+          />
+        </div>
+      </div>
+
       {/* Slider */}
-      <div className="mt-3">
+      <div className="mt-2.5">
         <input
           type="range"
           min={sector.min}
@@ -218,7 +237,7 @@ export const SectorCard: React.FC<SectorCardProps> = ({
       {showDetails && (
         <div className="mt-3 pt-3 border-t border-gray-800 space-y-2 text-xs text-left animate-fadeIn">
           <p className="text-gray-300 leading-relaxed">{sector.description}</p>
-          
+
           <div className="bg-red-950/30 p-2 rounded border border-red-900/40 text-red-300 text-[11px] flex items-start gap-2">
             <AlertCircle className="w-3.5 h-3.5 text-red-400 shrink-0 mt-0.5" />
             <div>
